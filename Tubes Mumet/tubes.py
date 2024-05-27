@@ -125,5 +125,3 @@ def main():
         cekMenang()
         gantian()
     cetakBoard(board)
-
-main()
