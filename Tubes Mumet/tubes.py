@@ -1,6 +1,11 @@
+from collections import deque
+
 board = ["1","2","3",
         "4","5","6",
         "7","8","9"]
+board_copy = board.copy()
+step_playerX = deque([])
+step_playerY = deque([])
 gameMain = True
 playerX = input("Nama pemain 1: ")
 playerY = input("Nama pemain 2: ")
@@ -16,14 +21,19 @@ def cetakBoard(board): # Fungsi mencetak board tictactoe
 
 def inputPlayer(board): # Fungsi inputan dari player
     global gakGanti
+    global step_playerX
+    global step_playerY
+    global currPlayer
     inp = int(input(f"{currPlayer} Masukkan angka sesuai plot board: "))
     if inp>=1 and inp<=9:
         if board[inp-1]!="X" and board[inp-1]!="O":
             gakGanti = 0
             if currPlayer == playerY:
                 board[inp-1] = "O"
+                step_playerY.append(inp)
             elif currPlayer == playerX:
                 board[inp-1] = "X"
+                step_playerX.append(inp)
         else:
             print("WEH, dia udah punya yang lain")
             gakGanti = 1
@@ -46,12 +56,13 @@ def cekHoriz(board): # Fungsi cek keadaan horizontal kalo menang
         elif board[3] == "O":
             winner = playerY
         return True
-    elif board[5]==board[6]==board[7]:
+    elif board[6]==board[7]==board[8]:
         if board[5] == "X":
             winner = playerX
         elif board[5] == "O":
             winner = playerY
         return True
+    return False
 
 def cekVerti(board): # Fungsi cek keadaan vertikal kalo menang
     global winner
@@ -75,6 +86,7 @@ def cekVerti(board): # Fungsi cek keadaan vertikal kalo menang
         elif board[5] == "O":
             winner = playerY
         return True
+    return False
 
 def cekDiag(board): # Fungsi cek keadaan diagonal kalo menang
     global winner
@@ -92,6 +104,7 @@ def cekDiag(board): # Fungsi cek keadaan diagonal kalo menang
         elif board[3] == "O":
             winner = playerY
         return True
+    return False
 
 def cekMenang(): # Fungsi kalo udah ada yg menang
     global gameMain
@@ -99,6 +112,22 @@ def cekMenang(): # Fungsi kalo udah ada yg menang
     if cekDiag(board) or cekHoriz(board) or cekVerti(board):
         print(f"Selamat pemenangnya adalah {currPlayer}")
         gameMain = False
+        return True
+    return False
+        
+def cekLanjut():
+    global step_playerY
+    global step_playerX
+    global board_copy
+    global board
+    if len(step_playerX)==4 and not cekMenang():
+        id_apus = step_playerX[0]
+        board[id_apus-1] = board_copy[id_apus-1]
+        step_playerX.popleft()
+    if len(step_playerY)==4 and not cekMenang():
+        id_apus = step_playerY[0]
+        board[id_apus-1] = board_copy[id_apus-1]
+        step_playerY.popleft()
 
 def gantian(): # Fungsi player main ganti2an
     global currPlayer
@@ -114,14 +143,13 @@ def gantian(): # Fungsi player main ganti2an
             currPlayer = playerX
         elif currPlayer == playerY:
             currPlayer = playerY
-        
+
 def main():
     while gameMain:
         cetakBoard(board)
-        print(f"{currPlayer} Main")
+        print(f"Sekarang giliran {currPlayer}")
         inputPlayer(board)
-        # print(f"BEFORE: {currPlayer}")
-        # print(f"AFTER: {currPlayer})")
-        cekMenang()
+        if not cekMenang():
+            cekLanjut()
         gantian()
     cetakBoard(board)
