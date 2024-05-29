@@ -1,3 +1,5 @@
 import tubes
+import fitur
 
-tubes.main()
+fitur.clear_scr()
+fitur.jalankanFitur()
