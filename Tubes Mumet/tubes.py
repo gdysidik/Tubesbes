@@ -1,6 +1,6 @@
 from collections import deque
-from colorama import Fore
 import fitur
+from colorama import Fore
 
 board = ["1","2","3",
         "4","5","6",
@@ -28,6 +28,7 @@ def setGame():
     fitur.clear_scr()
 
 def cetakBoard(): # Fungsi mencetak board tictactoe
+    print(Fore.BLUE)
     print("\t\t   |   |  ")
     print("\t\t " + board[0] + " | " + board[1] + " | " + board[2])
     print("\t\t   |   |  ")
