@@ -1,6 +1,10 @@
 from collections import deque
-import os
+import fitur
 
+board = ["1","2","3",
+        "4","5","6",
+        "7","8","9"]
+ 
 def setGame():
     global board # Tabel main tictactoe
     global board_copy # Tabel tictactoe copy-an
@@ -12,9 +16,6 @@ def setGame():
     global currPlayer # Pemain yang sekarang lagi giliran jalan
     global winner # Pemenang game
     
-    board = ["1","2","3",
-        "4","5","6",
-        "7","8","9"]
     board_copy = board.copy()
     step_playerX = deque([])
     step_playerY = deque([])
@@ -23,22 +24,31 @@ def setGame():
     playerY = input("Nama pemain 2: ")
     currPlayer = playerX
     winner = None
+    fitur.clear_scr()
 
-def cetakBoard(board): # Fungsi mencetak board tictactoe
-    print(board[0] + "|" + board[1] + "|" + board[2])
-    print("------")
-    print(board[3] + "|" + board[4] + "|" + board[5])
-    print("------")
-    print(board[6] + "|" + board[7] + "|" + board[8])
+def cetakBoard(): # Fungsi mencetak board tictactoe
+    print("\t\t   |   |  ")
+    print("\t\t " + board[0] + " | " + board[1] + " | " + board[2])
+    print("\t\t   |   |  ")
+    print("\t\t-----------")
+    print("\t\t   |   |  ")
+    print("\t\t " + board[3] + " | " + board[4] + " | " + board[5])
+    print("\t\t   |   |  ")
+    print("\t\t-----------")
+    print("\t\t   |   |  ")
+    print("\t\t " + board[6] + " | " + board[7] + " | " + board[8])
+    print("\t\t   |   |  ")
 
-def inputPlayer(board): # Fungsi inputan dari player
+def inputPlayer(): # Fungsi inputan dari player
     global gakGanti
     global step_playerX
     global step_playerY
     global currPlayer
-    inp = int(input(f"{currPlayer} Masukkan angka sesuai plot board: "))
+    print(f"\n\n\t\tSekarang giliran {currPlayer}")
+    inp = int(input(f"\t\t{currPlayer} bisa masukkan angka sesuai plot board: "))
     if inp>=1 and inp<=9:
         if board[inp-1]!="X" and board[inp-1]!="O":
+            fitur.clear_scr()
             gakGanti = 0
             if currPlayer == playerY:
                 board[inp-1] = "O"
@@ -47,13 +57,15 @@ def inputPlayer(board): # Fungsi inputan dari player
                 board[inp-1] = "X"
                 step_playerX.append(inp)
         else:
-            clear_scr()
-            print("WEH, dia udah punya yang lain")
+            fitur.clear_scr()
+            print("\t\tWEH, dia udah punya yang lain")
             gakGanti = 1
     else:
-        print("Ikutin perintah dong brother...")
+        fitur.clear_scr()
+        print("\t\tIkutin perintah dong brother...")
+        gakGanti = 1
 
-def cekHoriz(board): # Fungsi cek keadaan horizontal kalo menang
+def cekHoriz(): # Fungsi cek keadaan horizontal kalo menang
     global winner
     global playerX
     global playerY
@@ -77,7 +89,7 @@ def cekHoriz(board): # Fungsi cek keadaan horizontal kalo menang
         return True
     return False
 
-def cekVerti(board): # Fungsi cek keadaan vertikal kalo menang
+def cekVerti(): # Fungsi cek keadaan vertikal kalo menang
     global winner
     global playerX
     global playerY
@@ -101,7 +113,7 @@ def cekVerti(board): # Fungsi cek keadaan vertikal kalo menang
         return True
     return False
 
-def cekDiag(board): # Fungsi cek keadaan diagonal kalo menang
+def cekDiag(): # Fungsi cek keadaan diagonal kalo menang
     global winner
     global playerX
     global playerY
@@ -122,8 +134,11 @@ def cekDiag(board): # Fungsi cek keadaan diagonal kalo menang
 def cekMenang(): # Fungsi kalo udah ada yg menang
     global gameMain
     global currPlayer
-    if cekDiag(board) or cekHoriz(board) or cekVerti(board):
-        print(f"Selamat pemenangnya adalah {currPlayer}")
+    global board
+    if cekDiag() or cekHoriz() or cekVerti():
+        fitur.clear_scr()
+        cetakBoard()
+        print(f"\n\n\t\tSelamat pemenangnya adalah {currPlayer}")
         gameMain = False
         return True
     return False
@@ -157,17 +172,13 @@ def gantian(): # Fungsi player main ganti2an
         elif currPlayer == playerY:
             currPlayer = playerY
 
-def clear_scr(): # Fungsi buat clear layar terminal
-    os.system('cls')
-
-def main(): # Fungsi utama program
-    clear_scr()
+def mainkan(): # Fungsi play tictactoe
+    fitur.clear_scr()
     setGame()
     while gameMain:
-        cetakBoard(board)
-        print(f"Sekarang giliran {currPlayer}")
-        inputPlayer(board)
+        cetakBoard()
+        inputPlayer()
         if not cekMenang():
             cekLanjut()
         gantian()
-    cetakBoard(board)
+    # cetakBoard(board)
