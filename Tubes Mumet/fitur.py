@@ -14,6 +14,7 @@ def clear_scr(): # Fungsi buat clear layar terminal
     
 def tampilanAwal():
     global idx
+    print(Fore.LIGHTYELLOW_EX)
     patterns = [
     [["\t\tT T T T T       I I I I        C C C C "]],
     [["\t\t    T             II         CC        "]],
@@ -40,21 +41,22 @@ def tampilanAwal():
     ] 
     def print_pattern():
         for row in pattern:
-            print(Fore.LIGHTYELLOW_EX + "")
+            print("")
             sys.stdout.write("\r" + " ".join(row))
             sys.stdout.flush()
             time.sleep(0.1)         
     for pattern in patterns:
         print_pattern()
-    key = input("\n\t\tklik 'N' untuk lanjut ")
+    key = input(Fore.MAGENTA + "\n\t\tklik 'N' untuk lanjut ")
     if key=='n' or key=='N':
         idx+=1
     else:
-        print("\t\tpencet n hey")
+        print(Fore.RED + "\t\tpencet n hey")
         idx+=0
     
 def tampilanFitur():
     global idx
+    print(Fore.LIGHTCYAN_EX)
     clear_scr()
     print("\t\t------------------------------------")
     print("\t\t|                                  |")
@@ -62,7 +64,7 @@ def tampilanFitur():
     print("\t\t|                                  |")
     print("\t\t------------------------------------")
     print("\n\t\t1. Mainkan brother\n\t\t2. Yang pernah menang siapa aja ya?\n\t\t3. Balik aja deh")
-    key = int(input("\t\tKetik sesuai angka yang ingin dipilih "))
+    key = int(input(Fore.MAGENTA + "\t\tKetik sesuai angka yang ingin dipilih "))
     if key==1:
         idx+=1
     elif key==2:
