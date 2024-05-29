@@ -1,16 +1,28 @@
 from collections import deque
+import os
 
-board = ["1","2","3",
+def setGame():
+    global board # Tabel main tictactoe
+    global board_copy # Tabel tictactoe copy-an
+    global step_playerX # Buat nyimpen langkah yg udh diambil playerX
+    global step_playerY # Buat nyimpen langkah yg udh diambil playerY
+    global gameMain # Boolean buat gamenya masih main atau engga
+    global playerX # Pemain 1
+    global playerY # Pemain 2
+    global currPlayer # Pemain yang sekarang lagi giliran jalan
+    global winner # Pemenang game
+    
+    board = ["1","2","3",
         "4","5","6",
         "7","8","9"]
-board_copy = board.copy()
-step_playerX = deque([])
-step_playerY = deque([])
-gameMain = True
-playerX = input("Nama pemain 1: ")
-playerY = input("Nama pemain 2: ")
-currPlayer = playerX
-winner = None
+    board_copy = board.copy()
+    step_playerX = deque([])
+    step_playerY = deque([])
+    gameMain = True
+    playerX = input("Nama pemain 1: ")
+    playerY = input("Nama pemain 2: ")
+    currPlayer = playerX
+    winner = None
 
 def cetakBoard(board): # Fungsi mencetak board tictactoe
     print(board[0] + "|" + board[1] + "|" + board[2])
@@ -35,6 +47,7 @@ def inputPlayer(board): # Fungsi inputan dari player
                 board[inp-1] = "X"
                 step_playerX.append(inp)
         else:
+            clear_scr()
             print("WEH, dia udah punya yang lain")
             gakGanti = 1
     else:
@@ -115,7 +128,7 @@ def cekMenang(): # Fungsi kalo udah ada yg menang
         return True
     return False
         
-def cekLanjut():
+def cekLanjut(): # Fungsi biar main terus tanpa ada hasil imbang
     global step_playerY
     global step_playerX
     global board_copy
@@ -144,7 +157,12 @@ def gantian(): # Fungsi player main ganti2an
         elif currPlayer == playerY:
             currPlayer = playerY
 
-def main():
+def clear_scr(): # Fungsi buat clear layar terminal
+    os.system('cls')
+
+def main(): # Fungsi utama program
+    clear_scr()
+    setGame()
     while gameMain:
         cetakBoard(board)
         print(f"Sekarang giliran {currPlayer}")
