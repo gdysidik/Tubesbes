@@ -1,4 +1,5 @@
 from collections import deque
+from colorama import Fore
 import fitur
 
 board = ["1","2","3",
@@ -20,8 +21,8 @@ def setGame():
     step_playerX = deque([])
     step_playerY = deque([])
     gameMain = True
-    playerX = input("Nama pemain 1: ")
-    playerY = input("Nama pemain 2: ")
+    playerX = input(Fore.GREEN + "Nama pemain 1: ")
+    playerY = input(Fore.GREEN + "Nama pemain 2: ")
     currPlayer = playerX
     winner = None
     fitur.clear_scr()
@@ -45,7 +46,7 @@ def inputPlayer(): # Fungsi inputan dari player
     global step_playerY
     global currPlayer
     print(f"\n\n\t\tSekarang giliran {currPlayer}")
-    inp = int(input(f"\t\t{currPlayer} bisa masukkan angka sesuai plot board: "))
+    inp = int(input(Fore.MAGENTA + f"\t\t{currPlayer} bisa masukkan angka sesuai plot board: "))
     if inp>=1 and inp<=9:
         if board[inp-1]!="X" and board[inp-1]!="O":
             fitur.clear_scr()
@@ -58,11 +59,11 @@ def inputPlayer(): # Fungsi inputan dari player
                 step_playerX.append(inp)
         else:
             fitur.clear_scr()
-            print("\t\tWEH, dia udah punya yang lain")
+            print(Fore.RED + "\t\tWEH, dia udah punya yang lain")
             gakGanti = 1
     else:
         fitur.clear_scr()
-        print("\t\tIkutin perintah dong brother...")
+        print(Fore.RED + "\t\tIkutin perintah dong brother...")
         gakGanti = 1
 
 def cekHoriz(): # Fungsi cek keadaan horizontal kalo menang
@@ -137,8 +138,8 @@ def cekMenang(): # Fungsi kalo udah ada yg menang
     global board
     if cekDiag() or cekHoriz() or cekVerti():
         fitur.clear_scr()
+        print(Fore.GREEN + f"\n\n\t\tSelamat pemenangnya adalah {currPlayer}")
         cetakBoard()
-        print(f"\n\n\t\tSelamat pemenangnya adalah {currPlayer}")
         gameMain = False
         return True
     return False
