@@ -2,25 +2,26 @@ from collections import deque
 import fitur
 from colorama import Fore
 
+global gameMain # Boolean buat gamenya masih main atau engga
+gameMain = True
 board = ["1","2","3",
         "4","5","6",
         "7","8","9"]
- 
-def setGame():
+def setgame():
     global board # Tabel main tictactoe
     global board_copy # Tabel tictactoe copy-an
     global step_playerX # Buat nyimpen langkah yg udh diambil playerX
     global step_playerY # Buat nyimpen langkah yg udh diambil playerY
-    global gameMain # Boolean buat gamenya masih main atau engga
+    
     global playerX # Pemain 1
     global playerY # Pemain 2
     global currPlayer # Pemain yang sekarang lagi giliran jalan
     global winner # Pemenang game
-    
+
     board_copy = board.copy()
     step_playerX = deque([])
     step_playerY = deque([])
-    gameMain = True
+    
     playerX = input(Fore.GREEN + "Nama pemain 1: ")
     playerY = input(Fore.GREEN + "Nama pemain 2: ")
     currPlayer = playerX
@@ -174,9 +175,19 @@ def gantian(): # Fungsi player main ganti2an
         elif currPlayer == playerY:
             currPlayer = playerY
 
+def getWinner():
+    return winner
+
+def resetGame():
+    global board_copy
+    global board
+    global winner
+    board = board_copy
+    winner = None
+
 def mainkan(): # Fungsi play tictactoe
     fitur.clear_scr()
-    setGame()
+    setgame()
     while gameMain:
         cetakBoard()
         inputPlayer()
