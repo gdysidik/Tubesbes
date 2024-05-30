@@ -1,7 +1,4 @@
-import sys
-import os
-import tubes
-import time
+import sys, os, tubes, time
 from colorama import Fore
 
 global fiturnya
@@ -15,6 +12,7 @@ def clear_scr(): # Fungsi buat clear layar terminal
     os.system('cls')
     
 def tampilanAwal():
+    clear_scr()
     global idx
     print(Fore.LIGHTYELLOW_EX)
     patterns = [
@@ -52,11 +50,21 @@ def tampilanAwal():
     key = input(Fore.MAGENTA + "\n\t\tklik 'N' untuk lanjut dan 'Q' untuk keluar ")
     if key=='n' or key=='N':
         idx=2
+        for i in range (0,101,10):
+            clear_scr()
+            print(f"\t\tLOADING -- {i}% --")
+            time.sleep(0.07)
     elif key=='q' or key=='Q':
         idx=0
         clear_scr()
         print(Fore.GREEN+"\t\tokh ckp tw, trms\n\t\tbye")
-        time.sleep(0.7)
+        time.sleep(1)
+        for i in range (0,101,10):
+            clear_scr()
+            print(Fore.LIGHTRED_EX+"\n\t\tSedang keluar. . .")
+            print(f"\t\tLOADING -- {i}% --")
+            print(Fore.RESET)
+            time.sleep(0.07)
     else:
         print(Fore.RED + "\t\tpencet n hey")
         idx+=0
@@ -82,57 +90,61 @@ def tampilanFitur():
         print(Fore.RED + "\t\tpencet sesuai angka hey")
         # time.sleep(1)
         return False
+    for i in range (0,101,10):
+        clear_scr()
+        print(Fore.LIGHTRED_EX)
+        print(f"\t\tLOADING -- {i}% --")
+        time.sleep(0.07)
 
-def histori():
-    global listPemenang
+def tampilkanRiwayat(): # Fungsi untuk menampilkan history match
     global idx
-    
     clear_scr()
-    no = 0
-    print(Fore.LIGHTBLUE_EX)
-    print("\t\t---------------------------")
-    print("\t\t DAFTAR PEMENANG TICTACTOE")
-    print("\t\t---------------------------")
-    if len(listPemenang)==0:
-        idx=2
-        print("\t\tBelum ada pemenang, main gamenya dulu coy")
-        time.sleep(1)
+    print(Fore.LIGHTGREEN_EX)
+    print("\t\t------------------------------------")
+    print("\t\t|          RIWAYAT PERMAINAN        |")
+    print("\t\t------------------------------------")
+    
+    if not os.path.exists('game_history.txt'):
+        print("\t\tBelum ada riwayat permainan.")
     else:
-        listPemenang.append(tubes.getWinner())
-        for i in listPemenang:
-            no+=1
-            print(f"\t\t{no}.\t" + i)
-            print("")
-        key = input("\n\t\tKetik 'B' untuk kembali dan 'R' untuk reset histori ")
-        if key=='b' or key=='B':
-            idx=2
-        elif key=='r' or key=='R':
-            idx=5
-        else:
-            idx=4
-            print(Fore.RED + "\t\tgausah ngaco hee")
-    if idx==5:
-        idx=2
-        listPemenang.clear()
-        print("\t\tLIST PEMENANG SUDAH BERHASIL DIHAPUS")
-        time.sleep(1)
+        with open('game_history.txt', 'r') as file:
+            lines = file.readlines()
+            if not lines:
+                print("\t\tBelum ada riwayat permainan.")
+            else:
+                for line in lines:
+                    print("\t\t" + line.strip())
+    
+    key = input(Fore.MAGENTA + "\n\t\tklik 'B' untuk kembali ")
+    if key=='b' or 'B':
+        idx = 2
+    else:
+        print(Fore.RED+"\t\tPencet sesuai pilihan woy")
+        idx+=0
+    for i in range (0,101,10):
+        clear_scr()
+        print(Fore.LIGHTRED_EX)
+        print(f"\t\tLOADING -- {i}% --")
+        time.sleep(0.07)
 
-def jalankanFitur():
+def jalankanFitur(): # Fungsi untuk menjalankan semua fitur game
     clear_scr()
     global idx
     global fiturnya
     while fiturnya==True:
-        print(idx)
         if idx==1:
             tampilanAwal()
         elif idx==2:
             tampilanFitur()
         elif idx==3:
             tubes.mainkan()
-            tubes.resetGame()
             idx-=1
-            time.sleep(1.5)
+            for i in range (0,101,10):
+                clear_scr()
+                print(Fore.LIGHTRED_EX)
+                print(f"\t\tLOADING -- {i}% --")
+                time.sleep(0.07)
         elif idx==4:
-            histori()
+            tampilkanRiwayat()
         elif idx==0:
             fiturnya = False
