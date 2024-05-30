@@ -52,6 +52,7 @@ def tampilanAwal():
         idx=2
         for i in range (0,101,10):
             clear_scr()
+            print(Fore.LIGHTRED_EX)
             print(f"\t\tLOADING -- {i}% --")
             time.sleep(0.07)
     elif key=='q' or key=='Q':
@@ -66,7 +67,8 @@ def tampilanAwal():
             print(Fore.RESET)
             time.sleep(0.07)
     else:
-        print(Fore.RED + "\t\tpencet n hey")
+        print(Fore.RED + "\t\tpencet yg bener hey")
+        time.sleep(2)
         idx+=0
     
 def tampilanFitur():
@@ -88,7 +90,7 @@ def tampilanFitur():
         idx=1
     else:
         print(Fore.RED + "\t\tpencet sesuai angka hey")
-        # time.sleep(1)
+        time.sleep(1)
         return False
     for i in range (0,101,10):
         clear_scr()
