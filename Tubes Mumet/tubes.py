@@ -1,5 +1,5 @@
 from collections import deque
-import fitur
+import fitur, time
 from colorama import Fore
 
 global gameMain # Boolean buat gamenya masih main atau engga
@@ -8,6 +8,7 @@ board = ["1","2","3",
         "4","5","6",
         "7","8","9"]
 def setgame():
+    fitur.clear_scr()
     global board # Tabel main tictactoe
     global board_copy # Tabel tictactoe copy-an
     global step_playerX # Buat nyimpen langkah yg udh diambil playerX
@@ -26,9 +27,14 @@ def setgame():
     playerY = input(Fore.GREEN + "Nama pemain 2: ")
     currPlayer = playerX
     winner = None
-    fitur.clear_scr()
+    for i in range (0,101,10):
+        fitur.clear_scr()
+        print(Fore.LIGHTRED_EX)
+        print(f"\t\tLOADING -- {i}% --")
+        time.sleep(0.07)
 
 def cetakBoard(): # Fungsi mencetak board tictactoe
+    fitur.clear_scr()
     print(Fore.BLUE)
     print("\t\t   |   |  ")
     print("\t\t " + board[0] + " | " + board[1] + " | " + board[2])
@@ -70,8 +76,8 @@ def inputPlayer(): # Fungsi inputan dari player
 
 def cekHoriz(): # Fungsi cek keadaan horizontal kalo menang
     global winner
-    global playerX
-    global playerY
+    # global playerX
+    # global playerY
     if board[0]==board[1]==board[2]:
         if board[0] == "X":
             winner = playerX
@@ -94,8 +100,8 @@ def cekHoriz(): # Fungsi cek keadaan horizontal kalo menang
 
 def cekVerti(): # Fungsi cek keadaan vertikal kalo menang
     global winner
-    global playerX
-    global playerY
+    # global playerX
+    # global playerY
     if board[0]==board[3]==board[6]:
         if board[0] == "X":
             winner = playerX
@@ -118,8 +124,8 @@ def cekVerti(): # Fungsi cek keadaan vertikal kalo menang
 
 def cekDiag(): # Fungsi cek keadaan diagonal kalo menang
     global winner
-    global playerX
-    global playerY
+    # global playerX
+    # global playerY
     if board[0]==board[4]==board[8]:
         if board[0] == "X":
             winner = playerX
@@ -142,7 +148,9 @@ def cekMenang(): # Fungsi kalo udah ada yg menang
         fitur.clear_scr()
         print(Fore.GREEN + f"\n\n\t\tSelamat pemenangnya adalah {currPlayer}")
         cetakBoard()
+        recordGameHistory()
         gameMain = False
+        time.sleep(1.5)
         return True
     return False
         
@@ -175,15 +183,21 @@ def gantian(): # Fungsi player main ganti2an
         elif currPlayer == playerY:
             currPlayer = playerY
 
-def getWinner():
-    return winner
+def recordGameHistory(): # Fungsi untuk merekam history
+    global winner
+    global playerX
+    global playerY
+    with open('game_history.txt', 'a') as file:
+        if winner:
+            file.write(f"Pemain: {playerX} (X) vs {playerY} (O) | Pemenang: {winner}\n")
 
-def resetGame():
+def resetGame(): # Fungsi untuk reset game setelah digunakan
     global board_copy
     global board
-    global winner
+    global gameMain
     board = board_copy
-    winner = None
+    gameMain = True
+    print(Fore.GREEN + "\n\n\t\tPermainan telah berakhir. Terima kasih telah bermain!")
 
 def mainkan(): # Fungsi play tictactoe
     fitur.clear_scr()
@@ -194,4 +208,4 @@ def mainkan(): # Fungsi play tictactoe
         if not cekMenang():
             cekLanjut()
         gantian()
-    # cetakBoard(board)
+    resetGame()
