@@ -1,5 +1,6 @@
-File Tubes Praktikum Pemro
-\n"TIC TAC TOE GAME" \nContributor:
+File Tubes Praktikum Pemro  
+"TIC TAC TOE GAME"  
+Contributor:
   1. Gunady Sidik
   2. Yumnandana Yessa
   3. Klara Rosalia
