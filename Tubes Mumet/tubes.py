@@ -66,12 +66,14 @@ def inputPlayer(): # Fungsi inputan dari player
                 board[inp-1] = "X"
                 step_playerX.append(inp)
         else:
-            fitur.clear_scr()
+            # fitur.clear_scr()
             print(Fore.RED + "\t\tWEH, dia udah punya yang lain")
+            time.sleep(2)
             gakGanti = 1
     else:
-        fitur.clear_scr()
+        # fitur.clear_scr()
         print(Fore.RED + "\t\tIkutin perintah dong brother...")
+        time.sleep(2)
         gakGanti = 1
 
 def cekHoriz(): # Fungsi cek keadaan horizontal kalo menang
@@ -147,10 +149,11 @@ def cekMenang(): # Fungsi kalo udah ada yg menang
     if cekDiag() or cekHoriz() or cekVerti():
         fitur.clear_scr()
         print(Fore.GREEN + f"\n\n\t\tSelamat pemenangnya adalah {currPlayer}")
+        time.sleep(2)
         cetakBoard()
         recordGameHistory()
         gameMain = False
-        time.sleep(1.5)
+        time.sleep(1)
         return True
     return False
         
