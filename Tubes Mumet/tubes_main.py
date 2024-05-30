@@ -1,5 +1,4 @@
-import tubes
-import fitur
+import fitur, tubes
 
 fitur.clear_scr()
 fitur.jalankanFitur()
